@@ -1,16 +1,17 @@
-import Header from "@containers/Header";
 import { Outlet } from "react-router-dom";
+import Header from "@containers/Header";
+import Footer from "@containers/Footer";
 
 const Layout = () => {
    return (
       <>
          <Header />
 
-         <main>
+         <main className="w-full min-h-[calc(100vh-23.625rem)] lg:min-h-[calc(100vh-24.375rem)]">
             <Outlet />
          </main>
 
-         <div className="py-12 flex justify-center border">Footer</div>
+         <Footer />
       </>
    );
 };
