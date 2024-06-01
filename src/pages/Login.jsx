@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useAuth } from "@contexts/AuthContext";
@@ -10,7 +10,7 @@ import Github from "@icons/Github";
 
 export default () => {
    document.title = "ProductHunt  |  Sign in";
-   const { signInWithEmail, signInWithProvider } = useAuth();
+   const { user, isAuthenticating, signInWithEmail, signInWithProvider } = useAuth();
    const [showPassword, setShowPassword] = useState(false);
    const location = useLocation();
    const nevigate = useNavigate();
@@ -24,6 +24,12 @@ export default () => {
    const redirect = () => {
       nevigate(location.state || "/");
    };
+
+   useEffect(() => {
+      if (user) nevigate("/");
+   }, [nevigate, user]);
+
+   if (user || isAuthenticating) return;
 
    return (
       <section className="p-8 w-full bg-auth-login">
