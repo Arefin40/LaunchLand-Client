@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.container {
+   @apply px-4 sm:px-6 lg:px-8 mx-auto max-w-[85rem];
+}
+
+.rating .star {
+   @apply text-gray-300;
+}
+
+.rating:has(:checked) .star,
+.rating:has(:checked) ~ .rating .star {
+   @apply text-primary-500;
+}
