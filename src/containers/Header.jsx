@@ -1,4 +1,5 @@
 import { Link, NavLink } from "react-router-dom";
+import { useAuth } from "@contexts/AuthContext";
 import { useVisibility } from "@hooks";
 import Drawer from "@components/Drawer";
 import Menu from "@icons/Menu";
@@ -6,6 +7,7 @@ import Avatar from "@components/Avatar";
 import UserMenu from "./UserMenu";
 
 const Header = () => {
+   const { user, signOut } = useAuth();
    const { isVisible, toggle, hide } = useVisibility(false);
 
    const navigations = [
@@ -26,14 +28,19 @@ const Header = () => {
    return (
       <header className="w-full sticky inset-x-0 top-0 z-40 bg-white border-b">
          <section className="px-5 sm:px-8 h-16 lg:h-auto lg:py-5 mx-auto container flex items-center justify-between">
-            <div className="w-full max-w-36 flex items-center gap-x-3">
+            <div className="w-full max-w-48 sm:max-w-64 flex items-center gap-x-3">
                <button onClick={toggle} className="lg:hidden active:scale-90 transition-all">
                   <Menu />
                </button>
 
-               <h1 className="w-9 h-9 flex items-center justify-center font-bold text-white text-2xl rounded-full bg-primary-600 shrink-0">
-                  P
-               </h1>
+               <Link to="/" className="flex items-center gap-x-3">
+                  <h1 className="w-9 h-9 flex items-center justify-center font-bold text-white text-2xl rounded-full bg-primary-600 shrink-0">
+                     P
+                  </h1>
+                  <h1 className="hidden sm:inline text-2xl font-extrabold flex-shrink-0 text-primary-500">
+                     <span>ProductHunt</span>
+                  </h1>
+               </Link>
             </div>
 
             <Drawer
@@ -55,13 +62,13 @@ const Header = () => {
                </ul>
             </Drawer>
 
-            <div className="w-full max-w-36 flex items-center gap-x-3 justify-end">
-               {false ? (
+            <div className="w-full max-w-48 sm:max-w-64 flex items-center gap-x-3 justify-end">
+               {user ? (
                   <div className="relative flex-shrink-0 group">
-                     <Avatar src="" size="w-10 h-10" />
+                     <Avatar src={user?.photoURL} size="w-10 h-10" />
 
                      <div className="hidden group-hover:block absolute right-0 pt-7 top-3/4 w-48">
-                        <UserMenu />
+                        <UserMenu user={user} onLogOut={signOut} />
                      </div>
                   </div>
                ) : (
