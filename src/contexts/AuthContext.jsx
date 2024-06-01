@@ -10,6 +10,7 @@ import {
    signOut,
 } from "firebase/auth";
 import { auth } from "../firebase";
+import axios from "axios";
 import toast from "react-hot-toast";
 
 const AuthContext = createContext(null);
@@ -30,6 +31,21 @@ const providers = {
    google: new GoogleAuthProvider(),
    github: new GithubAuthProvider(),
    facebook: new FacebookAuthProvider(),
+};
+
+const issueToken = async (user) => {
+   const response = await axios.post(
+      `${import.meta.env.APP_API_URL}/jwt`,
+      { email: user?.email },
+      { withCredentials: true }
+   );
+   if (response?.data.token) {
+      localStorage.setItem("access-token", response.data.token);
+   }
+};
+
+const clearToken = async () => {
+   localStorage.removeItem("access-token");
 };
 
 export const AuthProvider = ({ children }) => {
@@ -54,7 +70,8 @@ export const AuthProvider = ({ children }) => {
       setIsAuthenticating(true);
 
       try {
-         await signInWithPopup(auth, providers[authProvider]);
+         const userCredential = await signInWithPopup(auth, providers[authProvider]);
+         await issueToken(userCredential?.user);
          if (callbackFunction) callbackFunction();
          toast.success("Signed in successfully");
       } catch (error) {
@@ -65,7 +82,8 @@ export const AuthProvider = ({ children }) => {
    const logIn = async ({ email, password }, callbackFunction) => {
       setIsAuthenticating(true);
       try {
-         await signInWithEmailAndPassword(auth, email, password);
+         const userCredential = await signInWithEmailAndPassword(auth, email, password);
+         await issueToken(userCredential?.user);
          if (callbackFunction) callbackFunction();
          toast.success("Signed-in successfully");
       } catch (error) {
@@ -77,7 +95,7 @@ export const AuthProvider = ({ children }) => {
       setIsAuthenticating(true);
       try {
          await signOut(auth);
-         toast.success("Signed-out successfully");
+         await clearToken();
       } catch (error) {
          console.error(error);
       }
