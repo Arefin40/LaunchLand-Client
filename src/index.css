@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .container {
-   @apply px-4 sm:px-6 lg:px-8 mx-auto max-w-[85rem];
+   @apply px-4 sm:px-6 lg:px-8 mx-auto max-w-screen-xl;
 }
 
 .rating .star {
