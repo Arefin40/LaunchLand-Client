@@ -7,6 +7,9 @@ import Login from "@pages/Login";
 import Homepage from "@pages/Homepage";
 import Products from "@pages/Products";
 import ProductDetails from "@pages/ProductDetails";
+import DashboardLayout from "@layouts/DashboardLayout";
+import Dashboard from "@pages/dashboard/Dashboard";
+import Profile from "@pages/dashboard/Profile";
 
 const router = createBrowserRouter([
    {
@@ -33,6 +36,21 @@ const router = createBrowserRouter([
          {
             path: "/login",
             element: <Login />,
+         },
+      ],
+   },
+   {
+      path: "/dashboard",
+      element: <DashboardLayout />,
+      errorElement: <ErrorPage />,
+      children: [
+         {
+            path: "/dashboard",
+            element: <Dashboard />,
+         },
+         {
+            path: "/dashboard/Profile",
+            element: <Profile />,
          },
       ],
    },

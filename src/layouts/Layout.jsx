@@ -2,11 +2,10 @@ import { Outlet } from "react-router-dom";
 import Header from "@containers/Header";
 import Footer from "@containers/Footer";
 import { Toaster } from "react-hot-toast";
-import { AuthProvider } from "@contexts/AuthContext";
 
 const Layout = () => {
    return (
-      <AuthProvider>
+      <>
          <Toaster />
          <Header />
 
@@ -15,7 +14,7 @@ const Layout = () => {
          </main>
 
          <Footer />
-      </AuthProvider>
+      </>
    );
 };
 export default Layout;
