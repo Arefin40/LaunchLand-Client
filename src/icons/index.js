@@ -23,4 +23,5 @@ export { default as Love } from "./Love";
 export { default as Filter } from "./Filter";
 export { default as Star } from "./Star";
 
+export { default as Flag } from "./Flag";
 export { default as Upvote } from "./Upvote";
