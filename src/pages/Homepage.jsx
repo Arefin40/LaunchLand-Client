@@ -21,9 +21,11 @@ const Homepage = () => {
                   <ProductCard key={i} />
                ))}
             </div>
-            <Button to="/products" rounded variant="outlined" className="justify-self-center">
-               Show All Products
-            </Button>
+            <div className="mt-5 flex justify-center">
+               <Button to="/products" rounded variant="outlined">
+                  Show All Products
+               </Button>
+            </div>
          </section>
       </section>
    );
