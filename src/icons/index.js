@@ -21,3 +21,6 @@ export { default as Message } from "./Message";
 export { default as Share } from "./Share";
 export { default as Love } from "./Love";
 export { default as Filter } from "./Filter";
+export { default as Star } from "./Star";
+
+export { default as Upvote } from "./Upvote";

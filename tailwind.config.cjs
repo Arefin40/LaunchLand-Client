@@ -24,7 +24,7 @@ export default {
             },
          },
          gridTemplateColumns: {
-            table: "minmax(12.5rem,1fr) 10rem 10rem 9rem 9rem 13.125rem",
+            products: "repeat(auto-fit, minmax(20rem, 1fr))",
          },
          keyframes: {
             "scale-in": {

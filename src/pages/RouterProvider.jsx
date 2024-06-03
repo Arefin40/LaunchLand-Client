@@ -3,6 +3,7 @@ import Layout from "@layouts/Layout";
 import ErrorPage from "@pages/ErrorPage";
 import Register from "@pages/Register";
 import Login from "@pages/Login";
+import Homepage from "@pages/Homepage";
 
 const router = createBrowserRouter([
    {
@@ -12,13 +13,7 @@ const router = createBrowserRouter([
       children: [
          {
             path: "/",
-            element: (
-               <>
-                  <h1 className="py-24 text-4xl text-gray-800 font-bold text-center">
-                     Hello World
-                  </h1>
-               </>
-            ),
+            element: <Homepage />,
          },
          {
             path: "/register",
