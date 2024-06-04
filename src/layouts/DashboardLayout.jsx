@@ -100,7 +100,7 @@ const DashboardLayout = () => {
                </div>
             </Drawer>
 
-            <main className="relative p-4 sm:p-6 lg:p-8 lg:col-start-2">
+            <main className="min-w-0 relative p-4 sm:p-6 lg:p-8 lg:col-start-2">
                <Outlet />
             </main>
          </section>
