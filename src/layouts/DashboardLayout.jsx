@@ -24,8 +24,8 @@ const DashboardLayout = () => {
          },
          {
             icon: Reports,
-            path: "reported-contents",
-            label: "Reported Contents",
+            path: "reported-products",
+            label: "Reported Products",
          },
       ],
       user: [

@@ -14,6 +14,7 @@ import Profile from "@pages/dashboard/Profile";
 import MyProducts from "@pages/dashboard/MyProducts";
 import AddProduct from "@pages/dashboard/AddProduct";
 import ProductQueue from "@pages/dashboard/ProductQueue";
+import Reports from "@pages/dashboard/Reports";
 
 const router = createBrowserRouter([
    {
@@ -71,6 +72,10 @@ const router = createBrowserRouter([
          {
             path: "/dashboard/product-queue",
             element: <ProductQueue />,
+         },
+         {
+            path: "/dashboard/reported-products",
+            element: <Reports />,
          },
       ],
    },
