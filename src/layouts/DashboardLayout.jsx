@@ -6,7 +6,7 @@ import useVisibility from "@hooks/useVisibility";
 
 const DashboardLayout = () => {
    const { isVisible, toggle, hide } = useVisibility();
-   const role = "admin";
+   const role = "moderator";
 
    const navigations = {
       admin: [

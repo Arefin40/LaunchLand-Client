@@ -6,3 +6,5 @@ export { default as ManageProducts } from "./ManageProducts";
 export { default as AddProduct } from "./AddProduct";
 export { default as Link } from "./Link";
 export { default as Trash } from "./Trash";
+export { default as Accept } from "./Accept";
+export { default as Reject } from "./Reject";
