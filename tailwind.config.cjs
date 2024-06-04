@@ -1,5 +1,4 @@
 /** @type {import('tailwindcss').Config} */
-import colors from "tailwindcss/colors";
 
 export default {
    content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
@@ -26,6 +25,7 @@ export default {
          gridTemplateColumns: {
             products: "repeat(auto-fit, minmax(20rem, 1fr))",
             myproducts: "3.5rem minmax(12.5rem,1fr) 12rem 10rem 8rem",
+            users: "minmax(12.5rem,1fr) repeat(2,minmax(12rem,1fr)) 8rem",
          },
          keyframes: {
             "scale-in": {
