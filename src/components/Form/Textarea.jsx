@@ -8,6 +8,7 @@ export default forwardRef(
          name,
          value,
          errors,
+         className = "",
          placeholder = "",
          rows = "6",
          required = false,
@@ -24,7 +25,7 @@ export default forwardRef(
       });
 
       return (
-         <div>
+         <div className={className}>
             {label && (
                <label htmlFor={name} className="block mb-2 text-sm font-semibold text-gray-900 ">
                   {label}
@@ -43,7 +44,7 @@ export default forwardRef(
                spellCheck={spellCheck}
                onChange={onChange}
                onBlur={onBlur}
-               className={`block p-3 w-full text-sm text-gray-900 rounded-md border border-gray-300 outline-none focus:ring-2 shadow-sm ${textareaClass}`}
+               className={`block p-3 w-full text-sm text-gray-900 rounded-md border border-gray-200 outline-none focus:ring-2 ${textareaClass}`}
             ></textarea>
 
             {errors?.[name] && (

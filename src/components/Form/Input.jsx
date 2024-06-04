@@ -29,7 +29,7 @@ export default forwardRef(
          "pr-3": !endIcon,
          "focus:ring-primary-100 focus:border-primary-500": !errors?.[name],
          "focus:ring-rose-100 border-rose-500 focus:border-rose-500": errors?.[name],
-         "shadow-sm border-gray-300": !hideBorder,
+         "border-gray-200": !hideBorder,
          "bg-transparent border-transparent": hideBorder,
       });
 

@@ -53,8 +53,9 @@ const DashboardLayout = () => {
    return (
       <>
          <section className="relative grid lg:grid-cols-[16rem,1fr]">
-            <div className="hidden lg:block w-96 h-96 fixed top-0 right-0 rounded-full bg-orange-500 -z-10 blur-2xl bg-opacity-5 pointer-events-none" />
-            <div className="hidden lg:block w-96 h-96 fixed bottom-0 left-[20%] rounded-full bg-amber-500 -z-10 blur-2xl bg-opacity-5 pointer-events-none" />
+            <div className="hidden lg:block w-96 h-96 fixed top-0 right-0 rounded-full bg-orange-100 -z-10 blur-3xl bg-opacity-5 pointer-events-none" />
+            <div className="hidden lg:block w-96 h-96 fixed bottom-0 left-0 translate-x-1/4 translate-y-1/4 rounded-full bg-yellow-100 -z-10 pointer-events-none blur-3xl bg-opacity-5" />
+            <div className="fixed top-0 inset-x-0 h-32 bg-gradient-to-b from-orange-200/10 to-orange-50/10"></div>
 
             <div className="p-4 sm:p-6 lg:hidden h-16 sticky top-0 flex items-center justify-between border bg-white z-50">
                <h1 className="font-bold text-2xl text-primary-500">
@@ -69,7 +70,7 @@ const DashboardLayout = () => {
             <Drawer
                open={isVisible}
                onClose={hide}
-               className="p-5 lg:p-8 top-16 lg:top-0 lg:h-screen lg:w-64 lg:fixed lg:translate-x-0 z-50 border-r border-gray-100 lg:!bg-[#fffaf6]"
+               className="p-5 lg:p-8 top-16 lg:top-0 lg:h-screen lg:w-64 lg:fixed lg:translate-x-0 z-50 border-r border-gray-100 lg:!bg-[#fffaf6b0]"
             >
                <div className="hidden lg:flex items-center gap-x-3">
                   <h1 className="w-8 h-8 flex items-center justify-center font-bold text-white text-xl rounded-full bg-primary-600 shrink-0">

@@ -10,6 +10,7 @@ import ProductDetails from "@pages/ProductDetails";
 import DashboardLayout from "@layouts/DashboardLayout";
 import Dashboard from "@pages/dashboard/Dashboard";
 import Profile from "@pages/dashboard/Profile";
+import AddProduct from "@pages/dashboard/AddProduct";
 
 const router = createBrowserRouter([
    {
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
          {
             path: "/dashboard/Profile",
             element: <Profile />,
+         },
+         {
+            path: "/dashboard/add-product",
+            element: <AddProduct />,
          },
       ],
    },
