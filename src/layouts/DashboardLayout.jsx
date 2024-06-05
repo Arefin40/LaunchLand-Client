@@ -1,12 +1,20 @@
 import { Outlet, NavLink, useLocation } from "react-router-dom";
-import { AddProduct, ManageProducts, ManageUser, Products, Reports, User } from "@icons/dashboard";
+import {
+   AddProduct,
+   Coupon,
+   ManageProducts,
+   ManageUser,
+   Products,
+   Reports,
+   User,
+} from "@icons/dashboard";
 import { Menu } from "@icons";
 import Drawer from "@components/Drawer";
 import useVisibility from "@hooks/useVisibility";
 
 const DashboardLayout = () => {
    const { isVisible, toggle, hide } = useVisibility();
-   const role = "moderator";
+   const role = "admin";
 
    const navigations = {
       admin: [
@@ -14,6 +22,11 @@ const DashboardLayout = () => {
             icon: ManageUser,
             path: "manage-users",
             label: "Manage Users",
+         },
+         {
+            icon: Coupon,
+            path: "manage-coupons",
+            label: "Manage Coupons",
          },
       ],
       moderator: [
