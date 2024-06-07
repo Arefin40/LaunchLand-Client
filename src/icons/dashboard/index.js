@@ -9,3 +9,4 @@ export { default as Trash } from "./Trash";
 export { default as Accept } from "./Accept";
 export { default as Reject } from "./Reject";
 export { default as Coupon } from "./Coupon";
+export { default as Statistics } from "./Statistics";
