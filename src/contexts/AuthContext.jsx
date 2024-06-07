@@ -10,7 +10,7 @@ import {
    signOut,
 } from "firebase/auth";
 import { auth } from "../firebase";
-import axios from "axios";
+import axios from "@hooks/axios";
 import toast from "react-hot-toast";
 
 const AuthContext = createContext(null);
@@ -33,12 +33,20 @@ const providers = {
    facebook: new FacebookAuthProvider(),
 };
 
+const saveUserInfo = async (user) => {
+   try {
+      await axios.post("/users", {
+         name: user?.displayName,
+         email: user?.email,
+         photoUrl: user?.photoURL,
+      });
+   } catch (error) {
+      return;
+   }
+};
+
 const issueToken = async (user) => {
-   const response = await axios.post(
-      `${import.meta.env.APP_API_URL}/jwt`,
-      { email: user?.email },
-      { withCredentials: true }
-   );
+   const response = await axios.post("/jwt", { email: user?.email });
    if (response?.data.token) {
       localStorage.setItem("access-token", response.data.token);
    }
@@ -57,10 +65,12 @@ export const AuthProvider = ({ children }) => {
       try {
          const userCredential = await createUserWithEmailAndPassword(auth, email, password);
          await updateProfile(userCredential.user, { displayName, photoURL });
+         await saveUserInfo(userCredential?.user);
          if (callbackFunction) callbackFunction();
          toast.success("Account created successfully");
          setUser({ ...userCredential.user, displayName, photoURL });
       } catch (error) {
+         setIsAuthenticating(false);
          toast.error(formattedErrorMessage(error.code));
       }
    };
@@ -68,13 +78,13 @@ export const AuthProvider = ({ children }) => {
    const signInWithProvider = (authProvider, callbackFunction) => async (e) => {
       e.preventDefault();
       setIsAuthenticating(true);
-
       try {
          const userCredential = await signInWithPopup(auth, providers[authProvider]);
-         await issueToken(userCredential?.user);
+         await saveUserInfo(userCredential?.user);
          if (callbackFunction) callbackFunction();
          toast.success("Signed in successfully");
       } catch (error) {
+         setIsAuthenticating(false);
          toast.error(formattedErrorMessage(error.code));
       }
    };
@@ -82,11 +92,11 @@ export const AuthProvider = ({ children }) => {
    const logIn = async ({ email, password }, callbackFunction) => {
       setIsAuthenticating(true);
       try {
-         const userCredential = await signInWithEmailAndPassword(auth, email, password);
-         await issueToken(userCredential?.user);
+         await signInWithEmailAndPassword(auth, email, password);
          if (callbackFunction) callbackFunction();
          toast.success("Signed-in successfully");
       } catch (error) {
+         setIsAuthenticating(false);
          toast.error(formattedErrorMessage(error.code));
       }
    };
@@ -95,14 +105,14 @@ export const AuthProvider = ({ children }) => {
       setIsAuthenticating(true);
       try {
          await signOut(auth);
-         await clearToken();
       } catch (error) {
-         console.error(error);
+         setIsAuthenticating(false);
       }
    };
 
    useEffect(() => {
-      const unsubscribe = auth.onAuthStateChanged((currentUser) => {
+      const unsubscribe = auth.onAuthStateChanged(async (currentUser) => {
+         currentUser ? await issueToken(currentUser) : await clearToken();
          setUser(currentUser);
          setIsAuthenticating(false);
       });

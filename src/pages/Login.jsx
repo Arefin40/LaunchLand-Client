@@ -10,7 +10,7 @@ import Github from "@icons/Github";
 
 export default () => {
    document.title = "ProductHunt  |  Sign in";
-   const { user, isAuthenticating, signInWithEmail, signInWithProvider } = useAuth();
+   const { user, signInWithEmail, signInWithProvider } = useAuth();
    const [showPassword, setShowPassword] = useState(false);
    const location = useLocation();
    const nevigate = useNavigate();
@@ -28,8 +28,6 @@ export default () => {
    useEffect(() => {
       if (user) nevigate("/");
    }, [nevigate, user]);
-
-   if (user || isAuthenticating) return;
 
    return (
       <section className="p-8 w-full bg-auth-login">

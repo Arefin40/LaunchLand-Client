@@ -10,7 +10,7 @@ import { getEmailValidationSchema, getPasswordValidationSchema } from "@utils/Va
 export default () => {
    document.title = "ProductHunt  |  Sign up";
    const [showPassword, setShowPassword] = useState(false);
-   const { user, isAuthenticating, createAccount } = useAuth();
+   const { user, createAccount } = useAuth();
    const nevigate = useNavigate();
    const redirect = () => nevigate("/");
 
@@ -25,8 +25,6 @@ export default () => {
    useEffect(() => {
       if (user) nevigate("/");
    }, [nevigate, user]);
-
-   if (user || isAuthenticating) return;
 
    return (
       <section className="p-8 w-full bg-auth-login">
