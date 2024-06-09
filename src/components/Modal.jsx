@@ -2,18 +2,49 @@ import { useEffect } from "react";
 import ReactDOM from "react-dom";
 import Button from "./Button";
 
-const Modal = ({
-   title = "",
-   description = "",
+const Header = ({ title, description }) => {
+   return (
+      <div className="px-5 space-y-1 text-center">
+         <h1 className="text-xl text-gray-800 font-semibold">{title}</h1>
+         <p>{description}</p>
+      </div>
+   );
+};
+
+const SubmitButton = ({ children, className, ...restProps }) => {
+   return (
+      <Button {...restProps} type="submit" color="primary" className={`${className} w-full`}>
+         {children}
+      </Button>
+   );
+};
+
+const CancelButton = ({ children, className, ...restProps }) => {
+   return (
+      <Button {...restProps} variant="outlined" className={`${className} w-full`}>
+         {children}
+      </Button>
+   );
+};
+
+const ButtonGroup = ({ children }) => {
+   return (
+      <div className="px-5 mt-5 w-full mx-auto sm:max-w-[23rem] grid grid-cols-[repeat(auto-fit,minmax(10rem,1fr))] gap-2">
+         {children}
+      </div>
+   );
+};
+
+const Dialog = ({
    children,
    offset = "p-4 sm:p-5",
-   wrapperClass = "px-5 sm:px-6",
-   className = "",
-   submitButtonLabel = "Submit",
-   cancelButtonLabel = "Cancel",
-   onSubmit,
-   onCancel,
+   spacing = "p-5 sm:p-6",
+   className = "space-y-6",
+   onFormSubmit,
+   component = "div",
 }) => {
+   const Component = component;
+
    useEffect(() => {
       document.body.classList.add("overflow-hidden");
       return () => {
@@ -23,28 +54,21 @@ const Modal = ({
 
    return ReactDOM.createPortal(
       <div className={`${offset} fixed inset-0 z-50 flex items-center justify-center`}>
-         <div
-            className={`py-5 sm:py-6 space-y-6 w-full max-w-[28.75rem] rounded-xl shadow-xl z-50 border flex-shrink-0 bg-white animate-scale-in ${wrapperClass}`}
+         <Component
+            onSubmit={onFormSubmit}
+            className={`${spacing} w-full max-w-[28.75rem] rounded-xl shadow-xl z-50 border flex-shrink-0 bg-white animate-scale-in ${className}`}
          >
-            <div className="px-5 space-y-1 text-center">
-               <h1 className="text-xl text-gray-800 font-semibold">{title}</h1>
-               <p>{description}</p>
-            </div>
-
-            <div className={className}>{children}</div>
-
-            <div className="px-5 mt-5 w-full mx-auto sm:max-w-[23rem] grid grid-cols-[repeat(auto-fit,minmax(10rem,1fr))] gap-2">
-               <Button onClick={onSubmit} type="submit" color="primary">
-                  {submitButtonLabel}
-               </Button>
-               <Button onClick={onCancel} variant="outlined">
-                  {cancelButtonLabel}
-               </Button>
-            </div>
-         </div>
+            {children}
+         </Component>
       </div>,
       document.getElementById("modal-root")
    );
 };
 
-export default Modal;
+export default {
+   Header,
+   Dialog,
+   SubmitButton,
+   CancelButton,
+   ButtonGroup,
+};

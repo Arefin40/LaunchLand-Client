@@ -4,7 +4,7 @@ import { useUpdateUser, useLoggedUser } from "@hooks/useUser";
 import { Input } from "@components/Form";
 import Button from "@components/Button";
 import DashboardTitle from "@containers/DashboardTitle";
-import { useEffect } from "react";
+import SubscriptionModalWithButton from "@containers/modal/SubscriptionModal";
 
 const Profile = () => {
    const [editable, setEditable] = useState(false);
@@ -116,18 +116,12 @@ const Profile = () => {
                      <div className="divide-y divide-gray-100">
                         <div className="py-6 grid sm:grid-cols-3 gap-y-1 sm:gap-4 sm:px-0 sm:items-center">
                            <h3 className="text-sm font-medium leading-6 text-gray-900">Status</h3>
-                           {!true ? (
-                              <p className="p-3 mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0 tracking-wider">
+                           {user?.isSubscribed ? (
+                              <p className="p-3 mt-1 text-sm leading-6 text-primary-500 sm:col-span-2 sm:mt-0 tracking-wider">
                                  Verified
                               </p>
                            ) : (
-                                 <Button
-                                    variant="text"
-                                    color="primary"
-                                    className="justify-self-start"
-                                 >
-                                    Subscribe now
-                                 </Button>
+                              <SubscriptionModalWithButton user={user} />
                            )}
                         </div>
                      </div>

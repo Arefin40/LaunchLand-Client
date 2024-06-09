@@ -10,3 +10,4 @@ export { default as Accept } from "./Accept";
 export { default as Reject } from "./Reject";
 export { default as Coupon } from "./Coupon";
 export { default as Statistics } from "./Statistics";
+export { default as Tickmark } from "./Tickmark";
