@@ -5,6 +5,7 @@ import { AuthProvider } from "@contexts/AuthContext";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import "swiper/css";
+import "react-datepicker/dist/react-datepicker.css";
 import "./index.css";
 
 const queryClient = new QueryClient({

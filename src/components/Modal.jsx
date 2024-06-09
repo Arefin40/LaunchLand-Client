@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import ReactDOM from "react-dom";
 import Button from "./Button";
 
-const Header = ({ title, description }) => {
+const Header = ({ title = "", description = "" }) => {
    return (
       <div className="px-5 space-y-1 text-center">
          <h1 className="text-xl text-gray-800 font-semibold">{title}</h1>
@@ -11,7 +11,7 @@ const Header = ({ title, description }) => {
    );
 };
 
-const SubmitButton = ({ children, className, ...restProps }) => {
+const SubmitButton = ({ children, className = "", ...restProps }) => {
    return (
       <Button {...restProps} type="submit" color="primary" className={`${className} w-full`}>
          {children}
@@ -19,7 +19,7 @@ const SubmitButton = ({ children, className, ...restProps }) => {
    );
 };
 
-const CancelButton = ({ children, className, ...restProps }) => {
+const CancelButton = ({ children, className = "", ...restProps }) => {
    return (
       <Button {...restProps} variant="outlined" className={`${className} w-full`}>
          {children}
