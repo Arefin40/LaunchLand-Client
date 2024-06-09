@@ -1,9 +1,9 @@
 import { Navigate, useLocation } from "react-router-dom";
-import useRole from "@hooks/useRole";
+import { useLoggedUser } from "@hooks/useUser";
 
 export default ({ component, accessibleBy = "member" }) => {
    const location = useLocation();
-   const [role] = useRole();
+   const { data: user } = useLoggedUser();
 
    const dashboardNavigation = {
       admin: "/dashboard",
@@ -11,7 +11,7 @@ export default ({ component, accessibleBy = "member" }) => {
       member: "/dashboard/profile",
    };
 
-   if (role === accessibleBy) return component;
+   if (user?.role === accessibleBy) return component;
 
-   return <Navigate to={dashboardNavigation[role]} state={location?.pathname} />;
+   return <Navigate to={dashboardNavigation[user?.role]} state={location?.pathname} />;
 };

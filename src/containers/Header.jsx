@@ -5,9 +5,11 @@ import Drawer from "@components/Drawer";
 import Menu from "@icons/Menu";
 import Avatar from "@components/Avatar";
 import UserMenu from "./UserMenu";
+import { useLoggedUser } from "@hooks/useUser";
 
 const Header = () => {
-   const { user, signOut } = useAuth();
+   const { signOut } = useAuth();
+   const { data: user } = useLoggedUser();
    const { isVisible, toggle, hide } = useVisibility(false);
 
    const navigations = [
@@ -65,7 +67,7 @@ const Header = () => {
             <div className="w-full max-w-48 sm:max-w-64 flex items-center gap-x-3 justify-end">
                {user ? (
                   <div className="relative flex-shrink-0 group">
-                     <Avatar src={user?.photoURL} size="w-10 h-10" />
+                     <Avatar src={user?.photoUrl} size="w-10 h-10" />
 
                      <div className="hidden group-hover:block absolute right-0 pt-7 top-3/4 w-48">
                         <UserMenu user={user} onLogOut={signOut} />

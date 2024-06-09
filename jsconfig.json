@@ -3,15 +3,19 @@
       "baseUrl": ".",
       "paths": {
          "~/*": ["public/*"],
+         "@api/*": ["src/api/*"],
          "@assets/*": ["src/assets/*"],
+         "@icons/*": ["src/icons/*"],
          "@components/*": ["src/components/*"],
          "@containers/*": ["src/containers/*"],
          "@pages/*": ["src/pages/*"],
+         "@routes/*": ["src/routes/*"],
          "@layouts/*": ["src/layouts/*"],
-         "@icons/*": ["src/icons/*"],
          "@utils/*": ["src/utils/*"],
          "@hooks/*": ["src/hooks/*"],
-         "@contexts/*": ["src/contexts/*"]
+         "@contexts/*": ["src/contexts/*"],
+         "@providers/*": ["src/providers/*"],
+         "@services/*": ["src/services/*"]
       }
    },
    "exclude": ["node_modules", "dist"]

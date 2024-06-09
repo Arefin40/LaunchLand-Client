@@ -10,16 +10,17 @@ import {
    User,
 } from "@icons/dashboard";
 import { Menu, LogOut } from "@icons";
-import { useVisibility, useRole } from "@hooks";
+import { useVisibility } from "@hooks";
+import { useLoggedUser } from "@hooks/useUser";
 import { useAuth } from "@contexts/AuthContext";
 import Drawer from "@components/Drawer";
 import Skeleton from "@containers/Skeleton";
 import Avatar from "@components/Avatar";
 
 const DashboardLayout = () => {
-   const { user, signOut } = useAuth();
+   const { signOut } = useAuth();
    const { isVisible, toggle, hide } = useVisibility();
-   const [role, isUserLoading] = useRole();
+   const { data: user, isLoading } = useLoggedUser();
 
    const navigations = {
       admin: [
@@ -38,7 +39,7 @@ const DashboardLayout = () => {
       ],
    };
 
-   if (role === "" || isUserLoading) return <Skeleton />;
+   if (isLoading) return <Skeleton />;
 
    return (
       <>
@@ -72,7 +73,7 @@ const DashboardLayout = () => {
                </Link>
 
                <div className="lg:mt-10 space-y-8">
-                  {navigations[role].map(({ icon: Icon, path, label }) => (
+                  {navigations[user?.role].map(({ icon: Icon, path, label }) => (
                      <div
                         key={path}
                         className="flex items-center gap-x-4 font-medium text-gray-700"
@@ -94,10 +95,9 @@ const DashboardLayout = () => {
                      <Avatar
                         size="w-8 h-8"
                         className="rounded-full font-semibold text-white border"
-                        src={user?.photoURL}
-                        alt={user?.displayName}
+                        src={user?.photoUrl}
                      />
-                     <h1 className="tex-lg font-semibold">{user?.displayName}</h1>
+                     <h1 className="tex-lg font-semibold">{user?.name}</h1>
                   </div>
 
                   <button onClick={signOut} className="flex items-center gap-x-4 rounded-lg group">
