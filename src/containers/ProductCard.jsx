@@ -1,7 +1,14 @@
+import { useUpvoteProduct } from "@hooks/useProduct";
 import { Link } from "react-router-dom";
 import { Upvote } from "@icons";
 
 const ProductCard = ({ product }) => {
+   const upvoteMutation = useUpvoteProduct();
+
+   const upvote = () => {
+      upvoteMutation.mutate(product._id);
+   };
+
    return (
       <div className="p-5 border rounded-md">
          <div className="gap-4 flex items-start">
@@ -20,7 +27,10 @@ const ProductCard = ({ product }) => {
                   <h3 className="text-sm line-clamp-1">{product.tagline}</h3>
                </div>
 
-               <button className="py-1.5 w-14 text-xs font-semibold grid gap-y-1.5 content-center justify-items-center rounded border active:scale-90 transition-all shrink-0 border-gray-200">
+               <button
+                  onClick={upvote}
+                  className="py-1.5 w-14 text-xs font-semibold grid gap-y-1.5 content-center justify-items-center rounded border active:scale-90 transition-all shrink-0 border-gray-200"
+               >
                   <Upvote />
                   <span>{product.upvotes}</span>
                </button>
