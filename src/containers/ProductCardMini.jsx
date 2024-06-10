@@ -5,7 +5,7 @@ const ProductCardMini = ({ product }) => {
       <div className="h-auto flex gap-x-5">
          <img
             src={product.icon}
-            className="aspect-square h-full max-h-20 rounded border shrink-0 object-cover"
+            className="aspect-square h-full max-h-20 rounded shrink-0 object-cover object-center"
          />
          <div className="space-y-2 text-sm">
             <Link to={`/product/${product._id}`}>

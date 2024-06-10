@@ -8,7 +8,7 @@ const ProductCard = ({ product }) => {
             <Link to={`/product/${product._id}`} className="shrink-0">
                <img
                   src={product.icon}
-                  className="w-14 h-14 rounded border shrink-0 object-cover bg-center"
+                  className="w-14 h-14 rounded shrink-0 object-cover object-center"
                ></img>
             </Link>
 

@@ -8,7 +8,7 @@ const Card = ({ product }) => {
       <SwiperSlide className="h-auto min-w-0 flex gap-x-5">
          <img
             src={product.icon}
-            className="w-16 h-16 sm:w-24 sm:h-24 rounded border shrink-0  object-cover"
+            className="w-16 h-16 sm:w-24 sm:h-24 rounded border shrink-0 object-cover object-center"
          />
 
          <div className="space-y-2 text-sm">

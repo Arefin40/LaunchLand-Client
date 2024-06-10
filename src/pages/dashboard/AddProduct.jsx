@@ -1,36 +1,42 @@
 import { useForm } from "react-hook-form";
-import { useAuth } from "@contexts/AuthContext";
 import { Input, Textarea } from "@components/Form";
-import useSet from "@hooks/useSet";
 import DashboardTitle from "@containers/DashboardTitle";
 import ImageInput from "@containers/ImageInput";
 import TagsInput from "@containers/TagsInput";
 import Button from "@components/Button";
+import { useEffect } from "react";
+import { useLoggedUser } from "@hooks/useUser";
+import { useCreateProduct } from "@hooks/useProduct";
+import { useNavigate } from "react-router-dom";
 
 const ProductAddForm = ({ user }) => {
-   const [images, addImage, deleteImage] = useSet();
-   const [tags, addTag, deleteTag] = useSet();
+   const navigate = useNavigate();
+   const createProductMutation = useCreateProduct();
+   //prettier-ignore
+   const { register, watch, handleSubmit, control, reset, formState: { errors }} = useForm();
 
-   const {
-      register,
-      watch,
-      handleSubmit,
-      formState: { errors },
-   } = useForm({
-      defaultValues: {
-         name: "",
-         logo: "",
-         description: "",
-         owner: {
-            name: user?.displayName || "",
-            photoUrl: user?.photoURL || "",
-            email: user?.email || "",
-         },
-      },
-   });
+   // retrieve formData from sessionStorage
+   useEffect(() => {
+      const formData = sessionStorage.getItem("product-form-data");
+      if (formData) reset(JSON.parse(formData));
+   }, [reset]);
+
+   // auto save formData to sessionStorage
+   useEffect(() => {
+      const subscription = watch((data) => {
+         sessionStorage.setItem("product-form-data", JSON.stringify(data));
+      });
+      return () => subscription.unsubscribe();
+   }, [watch]);
+
+   const onSubmit = (data) => {
+      createProductMutation.mutate(data);
+      sessionStorage.removeItem("product-form-data");
+      navigate("/dashboard/products");
+   };
 
    return (
-      <form className="w-full max-w-3xl grid gap-y-8 sm:gap-y-12">
+      <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-3xl grid gap-y-8 sm:gap-y-12">
          <div className="space-y-6">
             <div className="pb-6 border-b border-gray-100">
                <h3 className="text-base font-semibold leading-7 text-gray-900">
@@ -50,15 +56,15 @@ const ProductAddForm = ({ user }) => {
                      placeholder="Enter product logo url"
                      spellCheck={false}
                      errors={errors}
-                     {...register("logo", {
-                        required: "Logo photo url is required",
+                     {...register("icon", {
+                        required: "Icon is required",
                      })}
                   />
                </div>
 
                <img
-                  src={watch("logo")}
-                  className="w-24 h-24 object-cover rounded-full shadow border border-gray-100 flex-shrink-0"
+                  src={watch("icon")}
+                  className="p-2 w-24 h-24 rounded-md shadow border border-gray-100 flex-shrink-0 object-cover object-center"
                />
             </div>
 
@@ -107,14 +113,14 @@ const ProductAddForm = ({ user }) => {
                />
             </div>
 
-            <TagsInput name="product-tags" tags={tags} addTag={addTag} deleteTag={deleteTag} />
+            <div>
+               <TagsInput name="tags" control={control} />
+               {errors.tags && (
+                  <small className="text-sm text-rose-500">{errors.tags.message}</small>
+               )}
+            </div>
 
-            <ImageInput
-               name="product-images"
-               images={images}
-               addImage={addImage}
-               deleteImage={deleteImage}
-            />
+            <ImageInput name="images" control={control} />
          </div>
 
          <div>
@@ -140,10 +146,7 @@ const ProductAddForm = ({ user }) => {
                         placeholder="Enter your name"
                         className="sm:col-span-2"
                         spellCheck={false}
-                        errors={errors}
-                        {...register("owner.name", {
-                           required: "Name is required",
-                        })}
+                        value={user?.name}
                      />
                   </div>
 
@@ -159,10 +162,7 @@ const ProductAddForm = ({ user }) => {
                         type="url"
                         placeholder="Enter your photo url"
                         className="sm:col-span-2"
-                        errors={errors}
-                        {...register("owner.photoUrl", {
-                           required: "Photo url is required",
-                        })}
+                        value={user?.photoUrl}
                      />
                   </div>
 
@@ -178,10 +178,7 @@ const ProductAddForm = ({ user }) => {
                         placeholder="Enter your email"
                         className="sm:col-span-2"
                         spellCheck={false}
-                        errors={errors}
-                        {...register("owner.email", {
-                           required: "Email is required",
-                        })}
+                        value={user?.email}
                      />
                   </div>
                </div>
@@ -189,7 +186,7 @@ const ProductAddForm = ({ user }) => {
          </div>
 
          <div className="flex justify-center">
-            <Button color="primary" className="w-full max-w-72">
+            <Button type="submit" color="primary" className="w-full max-w-72">
                Submit
             </Button>
          </div>
@@ -198,8 +195,8 @@ const ProductAddForm = ({ user }) => {
 };
 
 const AddNewProduct = () => {
-   const { user, isAuthenticating } = useAuth();
-   if (!user || isAuthenticating) return;
+   const { data: user, isLoading } = useLoggedUser();
+   if (!user || isLoading) return;
 
    return (
       <section className="space-y-10">
