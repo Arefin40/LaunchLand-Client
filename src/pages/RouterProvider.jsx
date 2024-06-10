@@ -15,6 +15,7 @@ import ManageCoupons from "@pages/dashboard/ManageCoupons";
 import Profile from "@pages/dashboard/Profile";
 import MyProducts from "@pages/dashboard/MyProducts";
 import AddProduct from "@pages/dashboard/AddProduct";
+import UpdateProduct from "@pages/dashboard/UpdateProduct";
 import ProductQueue from "@pages/dashboard/ProductQueue";
 import Reports from "@pages/dashboard/Reports";
 
@@ -69,6 +70,7 @@ const router = createBrowserRouter([
          roleProtected("member", "/profile", <Profile />),
          roleProtected("member", "/products", <MyProducts />),
          roleProtected("member", "/add-product", <AddProduct />),
+         roleProtected("member", "/update-product/:id", <UpdateProduct />),
       ],
    },
 ]);

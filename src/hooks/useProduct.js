@@ -19,6 +19,14 @@ export const useProductById = (id) => {
    });
 };
 
+// Get my products
+export const useMyProducts = () => {
+   return useQuery({
+      queryKey: ["products", "myproducts"],
+      queryFn: Product.getMyProducts(),
+   });
+};
+
 // Get featured products
 export const useFeaturedProducts = () => {
    return useQuery({

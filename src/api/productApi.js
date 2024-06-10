@@ -16,6 +16,15 @@ export const getById = (id) => {
    };
 };
 
+// Get my products
+export const getMyProducts = () => {
+   const axiosSecure = useAxiosSecure();
+   return async () => {
+      const response = await axiosSecure.get(`/products/myproducts`);
+      return response.data;
+   };
+};
+
 // Get featured products
 export const getFeatured = () => {
    return async () => {
