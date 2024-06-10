@@ -1,5 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import * as Product from "@api/productApi";
+import toast from "react-hot-toast";
 
 // Get all products with pagination
 export const useProducts = (page = 1, limit = 6) => {
@@ -73,9 +74,12 @@ export const useCreateProduct = () => {
    return useMutation({
       mutationFn: Product.create(),
       onSuccess: () => {
+         toast.success("Product added successfully");
          queryClient.invalidateQueries(["products"]);
       },
-      onError: (err) => console.log(err.message),
+      onError: (err) => {
+         if (err?.response?.data?.message) toast.error(err.response.data.message);
+      },
    });
 };
 
@@ -85,10 +89,13 @@ export const useUpdateProduct = () => {
    return useMutation({
       mutationFn: Product.update(),
       onSuccess: (_, { id }) => {
+         toast.success("Product updated successfully");
          queryClient.invalidateQueries(["products"]);
          queryClient.invalidateQueries(["product", id]);
       },
-      onError: (err) => console.log(err.message),
+      onError: (err) => {
+         if (err?.response?.data?.message) toast.error(err.response.data.message);
+      },
    });
 };
 
@@ -98,9 +105,12 @@ export const useDeleteProduct = () => {
    return useMutation({
       mutationFn: Product.remove(),
       onSuccess: () => {
+         toast.success("Product deleted successfully");
          queryClient.invalidateQueries(["products"]);
       },
-      onError: (err) => console.log(err.message),
+      onError: (err) => {
+         if (err?.response?.data?.message) toast.error(err.response.data.message);
+      },
    });
 };
 
@@ -113,7 +123,9 @@ export const useUpvoteProduct = () => {
          queryClient.invalidateQueries(["product", id]);
          queryClient.invalidateQueries(["products"]);
       },
-      onError: (err) => console.log(err.message),
+      onError: (err) => {
+         if (err?.response?.data?.message) toast.error(err.response.data.message);
+      },
    });
 };
 
@@ -125,7 +137,9 @@ export const useChangeProductStatus = () => {
       onSuccess: () => {
          queryClient.invalidateQueries(["products", "queue"]);
       },
-      onError: (err) => console.log(err.message),
+      onError: (err) => {
+         if (err?.response?.data?.message) toast.error(err.response.data.message);
+      },
    });
 };
 
@@ -135,9 +149,12 @@ export const useFeatureProduct = () => {
    return useMutation({
       mutationFn: Product.feature(),
       onSuccess: () => {
+         toast.success("Successfully featured the product");
          queryClient.invalidateQueries(["products", "featured"]);
       },
-      onError: (err) => console.log(err.message),
+      onError: (err) => {
+         if (err?.response?.data?.message) toast.error(err.response.data.message);
+      },
    });
 };
 
@@ -147,8 +164,11 @@ export const useReportProduct = () => {
    return useMutation({
       mutationFn: Product.report(),
       onSuccess: () => {
+         toast.success("Product reported");
          queryClient.invalidateQueries(["products", "reports"]);
       },
-      onError: (err) => console.log(err.message),
+      onError: (err) => {
+         if (err?.response?.data?.message) toast.error(err.response.data.message);
+      },
    });
 };
