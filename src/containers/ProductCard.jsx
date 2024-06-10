@@ -1,11 +1,18 @@
 import { useUpvoteProduct } from "@hooks/useProduct";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Upvote } from "@icons";
+import { getAuth } from "firebase/auth";
 
 const ProductCard = ({ product }) => {
+   const { user } = getAuth();
+   const navigate = useNavigate();
    const upvoteMutation = useUpvoteProduct();
 
    const upvote = () => {
+      if (!user) {
+         navigate("/login");
+         return;
+      }
       upvoteMutation.mutate(product._id);
    };
 

@@ -22,7 +22,6 @@ export const getById = (id) => {
 export const serachByTags = (tags) => {
    return async () => {
       const response = await axios.get(`/products/s?tags=${tags}`);
-      console.log(response);
       return response.data;
    };
 };

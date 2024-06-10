@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { useAuth } from "@contexts/AuthContext";
 import {
    usePostReview,
    useProductById,
@@ -48,6 +48,8 @@ const ButtonWithReviewModal = ({ productId }) => {
 };
 
 const ProductDetails = () => {
+   const { user } = useAuth();
+   const navigate = useNavigate();
    const { id } = useParams();
    const { data: product, isLoading } = useProductById(id);
    const trendingProducts = useTrendingProducts();
@@ -62,6 +64,10 @@ const ProductDetails = () => {
    };
 
    const upvote = () => {
+      if (!user) {
+         navigate("/login");
+         return;
+      }
       upvoteMutation.mutate(product._id);
    };
 
