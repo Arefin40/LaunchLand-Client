@@ -2,7 +2,7 @@ import { Arrow } from "@icons";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-const ProductMedia = () => {
+const ProductMedia = ({ images }) => {
    return (
       <div className="relative">
          <Swiper
@@ -15,12 +15,12 @@ const ProductMedia = () => {
                prevEl: ".media-slide-prev",
             }}
          >
-            {Array.from({ length: 10 }).map((_, i) => (
+            {images.map((image, i) => (
                <SwiperSlide
                   key={i}
-                  className="mb-2 p-4 min-h-80 w-64 border border-gray-100 rounded-md shadow-md"
+                  className={`mb-2 h-80 w-auto border border-gray-100 rounded-md shadow-md overflow-hidden`}
                >
-                  Slide {i + 1}
+                  <img src={image} className="max-h-full" />
                </SwiperSlide>
             ))}
          </Swiper>

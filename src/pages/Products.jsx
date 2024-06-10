@@ -1,20 +1,25 @@
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { useProducts, useRisingProducts } from "@hooks/useProduct";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
-import { Search, Rising, Upvote } from "@icons";
+import { Search, Rising } from "@icons";
 import Pagination from "@components/Pagination";
 import ProductCard from "@containers/ProductCard";
-import StarRating from "@containers/StarRating";
+import ProductCardSkeleton from "@containers/ProductCardSkeleton";
+import RisingProduct from "@containers/RisingProduct";
 
 const Products = () => {
    const { page } = useParams();
    const navigate = useNavigate();
    const goToPage = (page) => navigate(`/products/${page}`);
 
+   const products = useProducts(page);
+   const risingProducts = useRisingProducts();
+
    return (
       <>
          <div className="mt-6 mb-6 container">
-            <div className="flex justify-between">
+            <div className="w-full flex justify-between">
                <Swiper
                   loop
                   speed={1000}
@@ -22,34 +27,20 @@ const Products = () => {
                   modules={[Autoplay]}
                   autoplay={{ delay: 5000 }}
                >
-                  {Array.from({ length: 3 }).map(() => (
-                     <SwiperSlide className="h-auto min-w-0 flex gap-x-5">
-                        <div className="w-24 h-24 rounded border shrink-0"></div>
-                        <div className="space-y-2 text-sm">
-                           <Link to="/product/1">
-                              <h1 className="font-semibold text-gray-800">Product name</h1>
-                           </Link>
-                           <p>
-                              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Temporibus,
-                              nobis?
-                           </p>
-                           <div className="flex items-center gap-x-3 divide-x">
-                              <div className="flex items-center gap-x-1.5">
-                                 <StarRating rating={4} fillColor="text-primary-300" />
-                                 <span className="scale-50">•</span>
-                                 <span>35 reviews</span>
-                              </div>
-                              <div className="pl-3 flex items-center gap-x-1.5">
-                                 <Upvote className="w-3.5 h-3.5" />
-                                 <span className="font-medium">20</span> upvotes
-                              </div>
-                           </div>
-                        </div>
-                     </SwiperSlide>
-                  ))}
+                  {risingProducts.isLoading
+                     ? Array.from({ length: 3 }).map((_, i) => (
+                          <SwiperSlide key={i} className="h-auto min-w-0 flex gap-x-5">
+                             <RisingProduct.Skeleton />
+                          </SwiperSlide>
+                       ))
+                     : risingProducts.data.data.map((product, i) => (
+                          <SwiperSlide key={product._id} className="h-auto min-w-0 flex gap-x-5">
+                             <RisingProduct.Card product={product} />
+                          </SwiperSlide>
+                       ))}
                </Swiper>
 
-               <div className="grid justify-items-center flex-shrink-0">
+               <div className="hidden sm:grid justify-items-center flex-shrink-0">
                   <Rising className="w-20 h-20" />
                   <h3 className="text-sm font-medium text-primary-500">Rising Product</h3>
                </div>
@@ -71,14 +62,28 @@ const Products = () => {
 
          <section className="mb-12 container space-y-12">
             <div className="space-y-6">
-               <div className="grid grid-cols-products gap-6">
-                  {Array.from({ length: 6 }).map((_, i) => (
-                     <ProductCard key={i} />
-                  ))}
+               <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
+                  {products.isLoading
+                     ? Array.from({ length: 6 }).map((_, i) => <ProductCardSkeleton key={i} />)
+                     : products?.data?.products.map((product, i) => (
+                          <ProductCard key={i} product={product} />
+                       ))}
                </div>
 
                <div className="flex justify-center">
-                  <Pagination currentPage={parseInt(page)} goToPage={goToPage} />
+                  {products.isLoading ? (
+                     <div className="flex gap-x-3">
+                        {Array.from({ length: 6 }).map((_, i) => (
+                           <div key={i} className="w-8 h-8 rounded bg-gray-100" />
+                        ))}
+                     </div>
+                  ) : (
+                     <Pagination
+                        currentPage={products.data.page}
+                        totalPages={products.data.pages}
+                        goToPage={goToPage}
+                     />
+                  )}
                </div>
             </div>
          </section>

@@ -10,8 +10,8 @@ export default ({ className = "w-full h-full" }) => {
                y2="63"
                gradientUnits="userSpaceOnUse"
             >
-               <stop offset="0" stop-color="#fed7aa" />
-               <stop offset="1" stop-color="#fed7aa" stop-opacity="0" />
+               <stop offset="0" stopColor="#fed7aa" />
+               <stop offset="1" stopColor="#fed7aa" stopOpacity="0" />
             </linearGradient>
          </defs>
          <path

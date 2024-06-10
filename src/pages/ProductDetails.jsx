@@ -1,11 +1,15 @@
 import { useState } from "react";
+import { useParams } from "react-router-dom";
+import { useProductById, useTrendingProducts } from "@hooks/useProduct";
 import { Flag, Upvote } from "@icons";
 import Button from "@components/Button";
 import ProductCardMini from "@containers/ProductCardMini";
+import ProductCardMiniSkeleton from "@containers/ProductCardMiniSkeleton";
 import ProductMedia from "@containers/ProductMedia";
 import Review from "@containers/Review";
 import ReviewFormModal from "@containers/ReviewFormModal";
 import SectionTitle from "@containers/SectionTitle";
+import LoadingBar from "@components/LoadingBar";
 
 const ButtonWithReviewModal = () => {
    const [isModalOpen, setIsModalOpen] = useState(false);
@@ -24,22 +28,32 @@ const ButtonWithReviewModal = () => {
 };
 
 const ProductDetails = () => {
+   const { id } = useParams();
+   const { data: product, isLoading } = useProductById(id);
+   const trendingProducts = useTrendingProducts();
+
+   if (isLoading) return <LoadingBar />;
+
    return (
       <section className="my-12 container space-y-12">
          <header className="w-full flex gap-x-5 gap-y-4 items-center justify-between flex-wrap">
             <div className="w-full sm:w-auto flex gap-x-5">
-               <div className="aspect-square h-20 sm:h-24 rounded border shrink-0"></div>
+               <img
+                  src={product?.icon}
+                  className="aspect-square h-20 sm:h-24 rounded border shrink-0 object-cover"
+               />
 
                <div className="space-y-1 sm:space-y-2">
                   <h1 className="text-xl sm:text-3xl font-semibold sm:font-bold text-gray-800">
-                     Product name
+                     {product?.name}
                   </h1>
-                  <p className="sm:text-lg">Tagline</p>
+                  <p className="sm:text-lg">{product?.tagline}</p>
                </div>
             </div>
 
             <div className="flex gap-x-3">
                <Button
+                  to={product?.website}
                   size="large"
                   color="border-primary-500 text-primary-500"
                   className="px-8"
@@ -54,30 +68,19 @@ const ProductDetails = () => {
                   size="large"
                   className="px-8"
                >
-                  1250
+                  {product?.upvotes}
                </Button>
             </div>
          </header>
 
          <main className="grid lg:grid-cols-[1fr_22rem] gap-x-12 gap-y-12">
             <div className="min-w-0 lg:pr-12 lg:border-r space-y-12">
-               <ProductMedia />
+               {product.images && <ProductMedia images={product.images} />}
 
                <section className="space-y-4">
                   <h1 className="text-xl text-gray-800 font-medium">About this product</h1>
                   <div className="space-y-3">
-                     <p className="leading-7">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat ea corporis
-                        sequi. Officia dolorem assumenda, itaque, error dolores voluptatibus enim
-                        cumque harum explicabo soluta similique ullam voluptatum, temporibus labore
-                        quaerat?
-                     </p>
-                     <p className="leading-7">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat ea corporis
-                        sequi. Officia dolorem assumenda, itaque, error dolores voluptatibus enim
-                        cumque harum explicabo soluta similique ullam voluptatum, temporibus labore
-                        quaerat?
-                     </p>
+                     <p className="leading-7">{product.description}</p>
                   </div>
                </section>
 
@@ -111,9 +114,11 @@ const ProductDetails = () => {
                <SectionTitle title="Trending Products" />
 
                <div className="pr-1 h-full grid gap-x-5 gap-y-8 md:grid-cols-2 lg:grid-cols-1 content-start lg:overflow-y-auto lg:box-content">
-                  {Array.from({ length: 6 }).map((_, i) => (
-                     <ProductCardMini key={i} />
-                  ))}
+                  {!trendingProducts.isLoading
+                     ? trendingProducts.data.data.map((product, i) => (
+                          <ProductCardMini key={i} product={product} />
+                       ))
+                     : Array.from({ length: 4 }).map((_, i) => <ProductCardMiniSkeleton key={i} />)}
                </div>
             </aside>
          </main>
