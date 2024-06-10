@@ -1,4 +1,4 @@
-import { useAxiosSecure } from "@hooks/axios";
+import axios, { useAxiosSecure } from "@hooks/axios";
 
 // Create a coupon
 export const create = () => {
@@ -14,6 +14,14 @@ export const getAll = () => {
    const axiosSecure = useAxiosSecure();
    return async () => {
       const response = await axiosSecure.get("/coupons");
+      return response.data;
+   };
+};
+
+// Get all valid coupons (not expired)
+export const getValidCoupons = () => {
+   return async () => {
+      const response = await axios.get("/coupons/valid");
       return response.data;
    };
 };

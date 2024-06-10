@@ -21,6 +21,14 @@ export const useCoupons = () => {
    });
 };
 
+// Get all valid coupons (not expired)
+export const useValidCoupons = () => {
+   return useQuery({
+      queryKey: ["coupons", "valid"],
+      queryFn: Coupon.getValidCoupons(),
+   });
+};
+
 // Update a coupon
 export const useUpdateCoupon = () => {
    const queryClient = useQueryClient();
