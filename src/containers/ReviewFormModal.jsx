@@ -19,13 +19,10 @@ const ReviewFormModal = ({ onCancel, onSubmit }) => {
    };
 
    return (
-      <Modal
-         title="Write a review"
-         description="Give a review about your experience"
-         onCancel={onCancel}
-         onSubmit={handleSubmit(onValid)}
-      >
-         <form className="grid gap-y-6">
+      <Modal.Dialog>
+         <Modal.Header title="Write a review" description="Give a review about your experience" />
+
+         <form onSubmit={handleSubmit(onValid)} className="grid gap-y-6">
             <div className="flex justify-center">
                <RadioGroup
                   className="flex gap-x-4 items-center flex-row-reverse text-gray-300"
@@ -53,8 +50,13 @@ const ReviewFormModal = ({ onCancel, onSubmit }) => {
                   {...register("comment", { required: true })}
                />
             </div>
+
+            <Modal.ButtonGroup>
+               <Modal.SubmitButton>Post review</Modal.SubmitButton>
+               <Modal.CancelButton onClick={onCancel}>Cancel</Modal.CancelButton>
+            </Modal.ButtonGroup>
          </form>
-      </Modal>
+      </Modal.Dialog>
    );
 };
 export default ReviewFormModal;

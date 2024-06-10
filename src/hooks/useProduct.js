@@ -138,6 +138,29 @@ export const useUpvoteProduct = () => {
    });
 };
 
+// Post a review on this product
+export const usePostReview = () => {
+   const queryClient = useQueryClient();
+   return useMutation({
+      mutationFn: Product.postReview(),
+      onSuccess: (_, { id }) => {
+         toast.success("Review posted successfully");
+         queryClient.invalidateQueries(["reviews", { id }]);
+      },
+      onError: (err) => {
+         if (err?.response?.data?.message) toast.error(err.response.data.message);
+      },
+   });
+};
+
+// Get all reviews posted for this product
+export const useReviews = (id) => {
+   return useQuery({
+      queryKey: ["reviews", { id }],
+      queryFn: Product.getReviews(id),
+   });
+};
+
 // Accept/Reject a product
 export const useChangeProductStatus = () => {
    const queryClient = useQueryClient();

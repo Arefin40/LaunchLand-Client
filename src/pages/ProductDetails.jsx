@@ -1,11 +1,14 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import {
+   usePostReview,
    useProductById,
    useReportProduct,
+   useReviews,
    useTrendingProducts,
    useUpvoteProduct,
 } from "@hooks/useProduct";
+import useVisibility from "@hooks/useVisibility";
 import { Flag, Upvote } from "@icons";
 import Button from "@components/Button";
 import ProductCardMini from "@containers/ProductCardMini";
@@ -16,18 +19,30 @@ import ReviewFormModal from "@containers/ReviewFormModal";
 import SectionTitle from "@containers/SectionTitle";
 import LoadingBar from "@components/LoadingBar";
 
-const ButtonWithReviewModal = () => {
-   const [isModalOpen, setIsModalOpen] = useState(false);
+const ButtonWithReviewModal = ({ productId }) => {
+   const postReviewMutation = usePostReview();
+   const { isVisible, show, hide } = useVisibility();
+
+   const postReview = (data) => {
+      postReviewMutation.mutate({
+         id: productId,
+         data: {
+            rating: data.rating,
+            comment: data.comment.body,
+         },
+      });
+   };
+
    return (
       <>
          <button
-            onClick={() => setIsModalOpen(true)}
+            onClick={show}
             className="px-4 py-2 text-sm text-primary-500 bg-primary-50 rounded-full active:scale-90 transition-all"
          >
             Write a review
          </button>
 
-         {isModalOpen && <ReviewFormModal onCancel={() => setIsModalOpen(false)} />}
+         {isVisible && <ReviewFormModal onSubmit={postReview} onCancel={hide} />}
       </>
    );
 };
@@ -38,6 +53,7 @@ const ProductDetails = () => {
    const trendingProducts = useTrendingProducts();
    const reportProductMutation = useReportProduct();
    const upvoteMutation = useUpvoteProduct();
+   const reviews = useReviews(id);
 
    if (isLoading) return <LoadingBar />;
 
@@ -105,18 +121,13 @@ const ProductDetails = () => {
                      <h1 className="text-xl text-gray-800 font-medium">Rating & Reviews</h1>
 
                      <div className="flex items-center gap-x-2">
-                        {/* <Button variant="text" color="text-primary-500">
-                           See all
-                        </Button> */}
-
-                        <ButtonWithReviewModal />
+                        <ButtonWithReviewModal productId={product._id} />
                      </div>
                   </div>
 
                   <div className="grid gap-y-8">
-                     {Array.from({ length: 3 }).map((_, i) => (
-                        <Review key={i} />
-                     ))}
+                     {!reviews.isLoading &&
+                        reviews.data.map((review) => <Review key={review._id} review={review} />)}
                   </div>
                </section>
 

@@ -105,6 +105,23 @@ export const upvote = () => {
    };
 };
 
+// Post a review on this product
+export const postReview = () => {
+   const axiosSecure = useAxiosSecure();
+   return async ({ id, data }) => {
+      const response = await axiosSecure.post(`/products/${id}/reviews`, data);
+      return response.data;
+   };
+};
+
+// Get all reviews posted for this product
+export const getReviews = (id) => {
+   return async () => {
+      const response = await axios.get(`/products/${id}/reviews`);
+      return response.data;
+   };
+};
+
 // Accept/Reject a product
 export const changeStatus = () => {
    const axiosSecure = useAxiosSecure();
