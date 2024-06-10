@@ -1,4 +1,6 @@
 import Cross from "@icons/Cross";
+import { forwardRef } from "react";
+import { Controller } from "react-hook-form";
 
 const Tag = ({ children, className = "", onDelete }) => {
    return (
@@ -17,13 +19,18 @@ const Tag = ({ children, className = "", onDelete }) => {
    );
 };
 
-const TagsInput = ({ name, tags, addTag, deleteTag }) => {
+const TagsInputBase = forwardRef(({ name, value = [], onChange, onBlur }, ref) => {
    const handleKeyDown = (e) => {
       if (e.key === "Enter") {
          e.preventDefault();
-         addTag(e.target.value);
+         const inputValue = e.target.value;
          e.target.value = "";
+         onChange([...value, inputValue.trim()]);
       }
+   };
+
+   const handleDelete = (tag) => {
+      onChange(value.filter((t) => t !== tag));
    };
 
    return (
@@ -33,23 +40,46 @@ const TagsInput = ({ name, tags, addTag, deleteTag }) => {
          </label>
 
          <div className="flex items-center gap-2 flex-wrap">
-            {tags.map((tag) => (
-               <Tag key={tag} onDelete={() => deleteTag(tag)}>
+            {value.map((tag) => (
+               <Tag key={tag} onDelete={() => handleDelete(tag)}>
                   {tag}
                </Tag>
             ))}
 
             <input
                type="text"
+               ref={ref}
                id={name}
                name={name}
-               enterkeyhint="done"
+               enterKeyHint="done"
                placeholder="add tag"
                onKeyDown={handleKeyDown}
+               onBlur={onBlur}
                className="ml-2 text-sm text-gray-900 outline-none bg-transparent"
             />
          </div>
       </div>
    );
+});
+
+const TagsInput = ({ control, name }) => {
+   return (
+      <Controller
+         name={name}
+         control={control}
+         defaultValue={[]}
+         rules={{ validate: (value) => value.length > 0 || "At least one tag is required" }}
+         render={({ field }) => (
+            <TagsInputBase
+               name={name}
+               ref={field.ref}
+               value={field.value || []}
+               onChange={field.onChange}
+               onBlur={field.onBlur}
+            />
+         )}
+      />
+   );
 };
+
 export default TagsInput;
