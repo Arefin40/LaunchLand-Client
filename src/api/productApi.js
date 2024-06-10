@@ -1,9 +1,11 @@
 import axios, { useAxiosSecure } from "@hooks/axios";
 
-// Get all products with pagination
-export const getAll = (page = 1, limit = 6) => {
+// Get all products with pagination and search
+export const getAll = (page = 1, limit = 6, tags) => {
    return async () => {
-      const response = await axios.get(`/products?page=${page}&limit=${limit}`);
+      const response = await axios.get("/products", {
+         params: { tags, page, limit },
+      });
       return response.data;
    };
 };
@@ -12,6 +14,15 @@ export const getAll = (page = 1, limit = 6) => {
 export const getById = (id) => {
    return async () => {
       const response = await axios.get(`/products/${id}`);
+      return response.data;
+   };
+};
+
+// Search product by tags
+export const serachByTags = (tags) => {
+   return async () => {
+      const response = await axios.get(`/products/s?tags=${tags}`);
+      console.log(response);
       return response.data;
    };
 };

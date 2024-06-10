@@ -3,10 +3,10 @@ import * as Product from "@api/productApi";
 import toast from "react-hot-toast";
 
 // Get all products with pagination
-export const useProducts = (page = 1, limit = 6) => {
+export const useProducts = (page = 1, limit = 6, tags) => {
    return useQuery({
-      queryKey: ["products", page, limit],
-      queryFn: Product.getAll(page, limit),
+      queryKey: ["products", { tags, page, limit }],
+      queryFn: Product.getAll(page, limit, tags),
       keepPreviousData: true,
    });
 };
@@ -17,6 +17,15 @@ export const useProductById = (id) => {
       queryKey: ["product", id],
       queryFn: Product.getById(id),
       enabled: !!id,
+   });
+};
+
+// Search product by tags
+export const useSearchProductByTags = (tags) => {
+   return useQuery({
+      queryKey: ["products", { tags }],
+      queryFn: Product.serachByTags(tags),
+      enabled: !!tags,
    });
 };
 

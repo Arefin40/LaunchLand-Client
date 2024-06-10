@@ -1,5 +1,6 @@
+import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { useProducts, useRisingProducts } from "@hooks/useProduct";
+import { useProducts, useRisingProducts, useSearchProductByTags } from "@hooks/useProduct";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import { Search, Rising } from "@icons";
@@ -13,8 +14,17 @@ const Products = () => {
    const navigate = useNavigate();
    const goToPage = (page) => navigate(`/products/${page}`);
 
-   const products = useProducts(page);
+   const [searchTags, setSearchTags] = useState("");
+   const products = useProducts(page, 6, searchTags);
    const risingProducts = useRisingProducts();
+
+   const search = (e) => {
+      if (e.key === "Enter") {
+         const tags = e.target.value.trim().split(" ").join(",");
+         navigate(`/products/1`);
+         setSearchTags(tags);
+      }
+   };
 
    return (
       <>
@@ -54,6 +64,8 @@ const Products = () => {
                   <input
                      type="text"
                      placeholder="Search..."
+                     enterKeyHint="search"
+                     onKeyDown={search}
                      className="h-full w-full max-w-lg rounded-md outline-none"
                   />
                </div>
