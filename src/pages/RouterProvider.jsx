@@ -6,6 +6,7 @@ import RoleProtectedRoute from "@layouts/RoleProtectedRoute";
 import ErrorPage from "@pages/ErrorPage";
 import Register from "@pages/Register";
 import Login from "@pages/Login";
+import Contact from "@pages/Contact";
 import Homepage from "@pages/Homepage";
 import Products from "@pages/Products";
 import ProductDetails from "@pages/ProductDetails";
@@ -49,6 +50,10 @@ const router = createBrowserRouter([
          {
             path: "/login",
             element: <Login />,
+         },
+         {
+            path: "/contact",
+            element: <Contact />,
          },
       ],
    },
