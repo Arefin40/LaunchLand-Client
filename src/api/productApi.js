@@ -116,7 +116,7 @@ export const feature = () => {
 export const report = () => {
    const axiosSecure = useAxiosSecure();
    return async (id) => {
-      const response = await axiosSecure.patch(`/products/${id}/report`);
+      const response = await axiosSecure.post(`/products/${id}/report`);
       return response.data;
    };
 };
@@ -126,6 +126,15 @@ export const getReportedProducts = () => {
    const axiosSecure = useAxiosSecure();
    return async () => {
       const response = await axiosSecure.get(`/products/reports`);
+      return response.data;
+   };
+};
+
+// Settle a report
+export const settleReport = () => {
+   const axiosSecure = useAxiosSecure();
+   return async (reportId) => {
+      const response = await axiosSecure.delete(`/products/${reportId}/settle`);
       return response.data;
    };
 };

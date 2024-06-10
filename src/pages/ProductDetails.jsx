@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { useProductById, useTrendingProducts } from "@hooks/useProduct";
+import { useProductById, useReportProduct, useTrendingProducts } from "@hooks/useProduct";
 import { Flag, Upvote } from "@icons";
 import Button from "@components/Button";
 import ProductCardMini from "@containers/ProductCardMini";
@@ -31,8 +31,13 @@ const ProductDetails = () => {
    const { id } = useParams();
    const { data: product, isLoading } = useProductById(id);
    const trendingProducts = useTrendingProducts();
+   const reportProductMutation = useReportProduct();
 
    if (isLoading) return <LoadingBar />;
+
+   const reportProduct = () => {
+      reportProductMutation.mutate(product._id);
+   };
 
    return (
       <section className="my-12 container space-y-12">
@@ -104,7 +109,10 @@ const ProductDetails = () => {
                   </div>
                </section>
 
-               <button className="font-medium flex items-center gap-x-3 text-gray-800">
+               <button
+                  onClick={reportProduct}
+                  className="font-medium flex items-center gap-x-3 text-gray-800"
+               >
                   <Flag className="w-5 h-5" />
                   <span>Report this product</span>
                </button>

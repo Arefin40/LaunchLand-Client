@@ -172,3 +172,16 @@ export const useReportProduct = () => {
       },
    });
 };
+
+// Settle a report
+export const useSettleReport = () => {
+   const queryClient = useQueryClient();
+   return useMutation({
+      mutationFn: Product.settleReport(),
+      onSuccess: () => {
+         toast.success("Report settled");
+         queryClient.invalidateQueries(["products", "reports"]);
+      },
+      onError: (err) => console.log(err.message),
+   });
+};
