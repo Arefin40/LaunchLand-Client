@@ -29,20 +29,27 @@ This is a platform where users can discover and share tech products such as web 
    -  Products page with search functionality and pagination.
    -  Dynamic sliders and carousels for product and coupon advertisements.
 
-5. **Dashboard**:
+## Live Links
+- [Live Website](https://sa-launchland.web.app)
+- [Server-side GitHub Repository](https://github.com/Arefin40/LaunchLand-server)
 
-   -  User Dashboard with routes for My Profile, Add Product, and My Products.
-   -  Moderator Dashboard for reviewing products and handling reported content.
-   -  Admin Dashboard for managing users, coupons, and viewing site statistics.
 
-6. **Responsive Design**:
+## To run in your local machine
 
-   -  Fully responsive layout for mobile, tablet, and desktop views.
+For client side, run the following commands:
+```
+git clone https://github.com/Arefin40/LaunchLand-client.git
 
-7. **Additional Features**:
-   -  Membership subscription system to remove product adding restrictions.
-   -  Coupon management and discount system.
-   -  404 Error Page.
-   -  Spinner
+cd LaunchLand-client && pnpm install
 
-[LIVE LINK](https://sa-product-hunt.web.app)
+pnpm run dev
+```
+
+For server side, run the following commands:
+```
+git clone https://github.com/Arefin40/LaunchLand-server.git
+
+cd LaunchLand-server && pnpm install
+
+pnpm run dev
+```
