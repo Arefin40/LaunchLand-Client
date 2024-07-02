@@ -37,10 +37,10 @@ const Header = () => {
 
                <Link to="/" className="flex items-center gap-x-3">
                   <h1 className="w-9 h-9 hidden sm:flex items-center justify-center font-bold text-white text-2xl rounded-full bg-primary-600 shrink-0">
-                     P
+                     L
                   </h1>
                   <h1 className="text-2xl font-extrabold flex-shrink-0 text-primary-500">
-                     <span>ProductHunt</span>
+                     <span>LaunchLand</span>
                   </h1>
                </Link>
             </div>

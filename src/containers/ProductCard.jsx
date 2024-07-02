@@ -1,10 +1,10 @@
 import { useUpvoteProduct } from "@hooks/useProduct";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "@contexts/AuthContext";
 import { Upvote } from "@icons";
-import { getAuth } from "firebase/auth";
 
 const ProductCard = ({ product }) => {
-   const { user } = getAuth();
+   const { user } = useAuth();
    const navigate = useNavigate();
    const upvoteMutation = useUpvoteProduct();
 

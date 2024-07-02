@@ -9,7 +9,7 @@ import Button from "@components/Button";
 import Github from "@icons/Github";
 
 export default () => {
-   document.title = "ProductHunt  |  Sign in";
+   document.title = "LaunchLand  |  Sign in";
    const { user, signInWithEmail, signInWithProvider } = useAuth();
    const [showPassword, setShowPassword] = useState(false);
    const location = useLocation();

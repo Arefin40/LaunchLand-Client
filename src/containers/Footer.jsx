@@ -7,10 +7,10 @@ export default () => {
          <footer className="px-5 lg:px-0 mx-auto container grid gap-y-10 justify-items-center text-center text-gray-700">
             <Link to="/" className="flex items-center gap-x-3">
                <h1 className="w-9 h-9 flex items-center justify-center font-bold text-white text-2xl rounded-full bg-primary-600 shrink-0">
-                  P
+                  L
                </h1>
                <h1 className="text-2xl lg:text-3xl font-extrabold flex-shrink-0 text-primary-500">
-                  <span>ProductHunt</span>
+                  <span>LaunchLand</span>
                </h1>
             </Link>
 
@@ -36,7 +36,7 @@ export default () => {
                <Github />
             </div>
 
-            <small className="text-gray-500">© 2024 ProductHunt.com. All rights reserved.</small>
+            <small className="text-gray-500">© 2024 LaunchLand.com. All rights reserved.</small>
          </footer>
       </footer>
    );

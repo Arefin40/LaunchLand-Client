@@ -8,7 +8,7 @@ import Button from "@components/Button";
 import { getEmailValidationSchema, getPasswordValidationSchema } from "@utils/ValidationSchema";
 
 export default () => {
-   document.title = "ProductHunt  |  Sign up";
+   document.title = "LaunchLand  |  Sign up";
    const [showPassword, setShowPassword] = useState(false);
    const { user, createAccount } = useAuth();
    const nevigate = useNavigate();

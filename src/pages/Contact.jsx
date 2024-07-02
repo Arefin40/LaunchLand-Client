@@ -15,7 +15,7 @@ const ContactCard = ({ contact }) => {
 };
 
 export default () => {
-   document.title = "ProductHunt  |  Contact us";
+   document.title = "LaunchLand  |  Contact us";
 
    const contacts = [
       {

@@ -50,7 +50,7 @@ const DashboardLayout = () => {
 
             <div className="p-4 sm:p-6 lg:hidden h-16 sticky top-0 flex items-center justify-between border bg-white z-50">
                <Link to="/" className="font-bold text-2xl text-primary-500">
-                  <span>ProductHunt</span>
+                  <span>LaunchLand</span>
                </Link>
 
                <button onClick={toggle}>
@@ -65,10 +65,10 @@ const DashboardLayout = () => {
             >
                <Link to="/" className="hidden lg:flex items-center gap-x-3">
                   <h1 className="w-8 h-8 flex items-center justify-center font-bold text-white text-xl rounded-full bg-primary-600 shrink-0">
-                     P
+                     L
                   </h1>
                   <h1 className="font-bold text-2xl text-primary-500">
-                     <span>ProductHunt</span>
+                     <span>LaunchLand</span>
                   </h1>
                </Link>
 
